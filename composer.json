@@ -1,0 +1,63 @@
+{
+  "name": "codebar-ag/laravel-event-logs",
+  "description": "Event logging for HTTP requests and model events with pluggable providers.",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": "^8.2",
+    "illuminate/support": "^12.0",
+    "illuminate/queue": "^12.0",
+    "illuminate/console": "^12.0",
+    "illuminate/database": "^12.0",
+    "illuminate/http": "^12.0",
+    "illuminate/pipeline": "^12.0"
+  },
+  "require-dev": {
+    "larastan/larastan": "^3.0",
+    "laravel/pint": "^1.0",
+    "nunomaduro/collision": "^8.6.1",
+    "orchestra/testbench": "^10.1.0",
+    "pestphp/pest": "^3.7.4",
+    "phpstan/extension-installer": "^1.4.3",
+    "phpstan/phpstan-deprecation-rules": "^2.0.1",
+    "phpstan/phpstan-phpunit": "^2.0.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "CodebarAg\\LaravelEventLogs\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "CodebarAg\\LaravelEventLogs\\Tests\\": "tests/",
+      "CodebarAg\\LaravelEventLogs\\Database\\Factories\\": "database/factories/"
+    }
+  },
+  "scripts": {
+    "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+    "test": "vendor/bin/pest",
+    "test-coverage": "vendor/bin/pest --coverage",
+    "analyse": "vendor/bin/phpstan analyse",
+    "analyse:level": "vendor/bin/phpstan analyse --level=9",
+    "pint": "vendor/bin/pint",
+    "pint:test": "vendor/bin/pint --test",
+    "format": "@pint"
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "composer/package-versions-deprecated": false,
+      "pestphp/pest-plugin": true,
+      "phpstan/extension-installer": true
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "CodebarAg\\LaravelEventLogs\\LaravelEventLogsServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
