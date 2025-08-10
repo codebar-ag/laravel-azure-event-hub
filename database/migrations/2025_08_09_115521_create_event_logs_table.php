@@ -39,7 +39,7 @@ return new class extends Migration
             $table->json('context')->nullable();
 
             $table->dateTime('synced_at')->nullable();
-            $table->dateTime('synced_failed_at')->nullable();
+            $table->dateTime('sync_failed_at')->nullable();
 
             $table->timestamps();
 

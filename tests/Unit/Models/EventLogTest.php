@@ -117,7 +117,7 @@ test('event log has correct fillable attributes', function () {
         'event_data',
         'context',
         'synced_at',
-        'synced_failed_at',
+        'sync_failed_at',
     ];
 
     expect((new EventLog)->getFillable())->toBe($fillable);

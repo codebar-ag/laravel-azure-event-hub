@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property array<string, mixed>|null $event_data
  * @property array<string, mixed>|null $context
  * @property \Carbon\Carbon|null $synced_at
+ * @property \Carbon\Carbon|null $sync_failed_at
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  *
@@ -57,7 +58,7 @@ class EventLog extends Model
         'event_data',
         'context',
         'synced_at',
-        'synced_failed_at',
+        'sync_failed_at',
     ];
 
     /** @var array<string, string> */
@@ -69,7 +70,7 @@ class EventLog extends Model
         'event_data' => 'array',
         'context' => 'array',
         'synced_at' => 'datetime',
-        'synced_failed_at' => 'datetime',
+        'sync_failed_at' => 'datetime',
     ];
 
     /**
@@ -79,7 +80,7 @@ class EventLog extends Model
     public function scopeUnsynced(Builder $query): Builder
     {
         /** @var Builder<EventLog> */
-        return $query->whereNull('synced_failed_at')->whereNull('synced_at');
+        return $query->whereNull('sync_failed_at')->whereNull('synced_at');
     }
 
     public function toArray(): array

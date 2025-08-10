@@ -18,7 +18,7 @@ return [
             'endpoint' => env('AZURE_EVENT_HUB_ENDPOINT'),
             'path' => env('AZURE_EVENT_HUB_PATH'),
             'primary_key' => env('AZURE_EVENT_HUB_PRIMARY_KEY'),
-            'policy_name' => env('AZURE_EVENT_HUB_POLICY_NAME', env('AZURE_EVENT_HUB_POLICY')),
+            'policy_name' => env('AZURE_EVENT_HUB_POLICY'),
         ],
     ],
 
