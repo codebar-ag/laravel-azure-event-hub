@@ -3,10 +3,10 @@
 [![Packagist Version](https://img.shields.io/packagist/v/codebar-ag/laravel-event-logs.svg)](https://packagist.org/packages/codebar-ag/laravel-event-logs)
 [![Downloads](https://img.shields.io/packagist/dt/codebar-ag/laravel-event-logs.svg)](https://packagist.org/packages/codebar-ag/laravel-event-logs/stats)
 [![License](https://img.shields.io/packagist/l/codebar-ag/laravel-event-logs.svg)](https://github.com/codebar-ag/laravel-event-logs/blob/main/LICENSE)
-[![PHP Version](https://img.shields.io/badge/PHP-8.4%2B-blue.svg)](https://www.php.net/)
-[![Laravel Version](https://img.shields.io/badge/Laravel-12.0%2B-red.svg)](https://laravel.com/)
-[![Pest Tests](https://github.com/codebar-ag/laravel-event-logs/workflows/Pest%20Tests/badge.svg)](https://github.com/codebar-ag/laravel-event-logs/actions/workflows/pest.yml)
-[![PHPStan](https://github.com/codebar-ag/laravel-event-logs/workflows/PHPStan%20Static%20Analysis/badge.svg)](https://github.com/codebar-ag/laravel-event-logs/actions/workflows/phpstan.yml)
+[![PHP Version](https://img.shields.io/packagist/php-v/codebar-ag/laravel-event-logs?logo=php&logoColor=white)](https://packagist.org/packages/codebar-ag/laravel-event-logs)
+[![Laravel Version](https://img.shields.io/badge/Laravel-12.x%2B-FF2D20?logo=laravel&logoColor=white)](https://laravel.com)
+[![PEST](https://github.com/codebar-ag/laravel-event-logs/actions/workflows/pest.yml/badge.svg)](https://github.com/codebar-ag/laravel-event-logs/actions/workflows/pest.yml)
+[![PHPStan](https://github.com/codebar-ag/laravel-event-logs/actions/workflows/phpstan.yml/badge.svg)](https://github.com/codebar-ag/laravel-event-logs/actions/workflows/phpstan.yml)
 
 This package provides event logging for HTTP requests and model events. It is provider-agnostic and supports pluggable transports. The initial provider implementation ships an Azure Event Hub sender.
 
@@ -17,7 +17,7 @@ This package provides event logging for HTTP requests and model events. It is pr
 - [Usage](#usage)
   - [Middleware Request Logging](#middleware-request-logging)
   - [Model Event Logging](#model-event-logging)
-  - [Sending to Azure Event Hub](#sending-to-azure-event-hub)
+  - [Sending Logs to Azure Event Hub](#sending-logs-to-azure-event-hub)
   - [Adding Context](#adding-context)
 
 ## Requirements
@@ -128,7 +128,7 @@ The middleware logs these HTTP request details:
 ]
 ```
 
-### Sending to Azure Event Hub
+### Sending Logs to Azure Event Hub
 
 The package provides an action to send event logs to Azure Event Hub. You can process events in background jobs for better performance.
 
@@ -154,7 +154,6 @@ return [
 #### Environment Variables
 
 ```bash
-EVENT_LOGS_ENABLED=true
 AZURE_EVENT_HUB_ENDPOINT=https://your-namespace.servicebus.windows.net
 AZURE_EVENT_HUB_PATH=your-event-hub-name
 AZURE_EVENT_HUB_POLICY_NAME=RootManageSharedAccessKey
@@ -172,7 +171,7 @@ use CodebarAg\LaravelEventLogs\Actions\AzureEventHubAction;
 use CodebarAg\LaravelEventLogs\Models\EventLog;
 
 // Send one event (instance API)
-(new AzureEventHubAction())->sendEvent($eventLog); // $eventLog is an instance of EventLog
+(new AzureEventHubAction())->send($eventLog); // $eventLog is an instance of EventLog
 ```
 
 #### Example Implementation
@@ -184,7 +183,7 @@ Create a job to process and send event logs to Azure Event Hub:
 
 namespace App\Jobs;
 
-use App\Actions\Azure\AzureEventHubAction;
+use CodebarAg\LaravelEventLogs\Actions\AzureEventHubAction;
 use CodebarAg\LaravelEventLogs\Models\EventLog;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -236,7 +235,7 @@ Use the `HasEventLogTrait` to automatically log model events (created, updated, 
 
 namespace App\Models;
 
-use CodebarAg\LaravelAzureEventHub\Traits\HasEventLogTrait;
+use CodebarAg\LaravelEventLogs\Traits\HasEventLogTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
